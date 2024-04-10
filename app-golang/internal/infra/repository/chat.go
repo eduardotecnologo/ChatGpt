@@ -15,6 +15,7 @@ type ChatRepositoryMySQL struct {
 	Queries *db.Queries
 }
 
+//Func Contrutor
 func NewChatRepositoryMySQL(dbt *sql.DB) *ChatRepositoryMySQL {
 	return &ChatRepositoryMySQL{
 		DB:      dbt,
@@ -36,7 +37,7 @@ func (r *ChatRepositoryMySQL) CreateChat(ctx context.Context, chat *entity.Chat)
 			Temperature:      float64(chat.Config.Temperature),
 			TopP:             float64(chat.Config.TopP),
 			N:                int32(chat.Config.N),
-			Stop:             chat.Config.Stop[0],
+			Stop:             chat.Config.Stop[0],// Primeira palavra - Array
 			MaxTokens:        int32(chat.Config.MaxTokens),
 			PresencePenalty:  float64(chat.Config.PresencePenalty),
 			FrequencyPenalty: float64(chat.Config.FrequencyPenalty),
@@ -62,7 +63,6 @@ func (r *ChatRepositoryMySQL) CreateChat(ctx context.Context, chat *entity.Chat)
 	if err != nil {
 		return err
 	}
-
 	return nil
 }
 

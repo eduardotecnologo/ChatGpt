@@ -7,7 +7,7 @@ import (
 )
 
 // Contratos (Ex: interfaces)
-type ChatGateway interface {
+type ChatGateway interface {// Assinaturas
 	CreateChat(ctx context.Context, chat *entity.Chat) error
 	FindChatByID(ctx context.Context, chatID string) (*entity.Chat, error)
 	SaveChat(ctx context.Context, chat *entity.Chat) error
