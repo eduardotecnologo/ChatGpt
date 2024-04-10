@@ -8,13 +8,13 @@ import (
 
 type ChatConfig struct {
 	Model            *Model
-	Temperature      float32 //0.0 to 1.0
-	TopP             float32
+	Temperature      float32  //0.0 to 1.0
+	TopP             float32  //0.0 to 1.0
 	N                int      // number of message to generate
 	Stop             []string //list of tokens to stop on
 	MaxTokens        int      // number of tokens to generate
-	PresencePenalty  float32
-	FrequencyPenalty float32
+	PresencePenalty  float32  //-2.0 to 2.0
+	FrequencyPenalty float32  //-2.0 to 2.0
 }
 
 type Chat struct {
@@ -64,13 +64,13 @@ func (c *Chat) AddMessage(m *Message) error {
 		return errors.New("Chat is ended. no more messages allowed")
 	}
 	for {
-		if c.Config.Model.GetMaxTokens() >= m.GetQtdTokens()+c.TokenUsage {
+		if c.Config.Model.GetMaxTokens() >= m.GetQtdTokens() + c.TokenUsage {
 			c.Messages = append(c.Messages, m)
 			c.RefreshTokenUsage()
 			break
 		}
 		c.ErasedMessages = append(c.ErasedMessages, c.Messages[0])
-		c.Messages = c.Messages[1:]
+		c.Messages = c.Messages[1:] // Remove a msg mais antiga!
 		c.RefreshTokenUsage()
 	}
 	return nil

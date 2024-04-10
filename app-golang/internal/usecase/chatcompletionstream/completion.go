@@ -55,10 +55,11 @@ func (uc *ChatCompletionUseCase) Execute(ctx context.Context, input ChatCompleti
 	chat, err := uc.ChatGateway.FindChatByID(ctx, input.ChatID)
 	if err != nil {
 		if err.Error() == "chat not found" {
+			// create new chat (entity)
 			chat, err = createNewChat(input)
 			if err != nil {
 				return nil, errors.New("error creating new chat: " + err.Error())
-			}
+			}// save on database****
 			err = uc.ChatGateway.CreateChat(ctx, chat)
 			if err != nil {
 				return nil, errors.New("error persisting new chat: " + err.Error())

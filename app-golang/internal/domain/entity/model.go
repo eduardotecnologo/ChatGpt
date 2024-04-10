@@ -5,10 +5,10 @@ type Model struct {
 	MaxTokens int
 }
 
-func NewModel(name string, maxToken int) *Model {
+func NewModel(name string, maxTokens int) *Model {
 	return &Model{
 		Name:      name,
-		MaxTokens: maxToken,
+		MaxTokens: maxTokens,
 	}
 }
 
